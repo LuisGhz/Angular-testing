@@ -3,30 +3,38 @@ import { LoggerService } from './logger.service';
 
 describe('Calculator service', () => {
 
+    let loggerSpy: any;
+    let calculatorService: CalculatorService;
+
+    beforeEach(() => {
+        loggerSpy = jasmine.createSpyObj('LoggerService', ['log']);
+
+        calculatorService = new CalculatorService(loggerSpy);
+    });
+
     it('Should add two numbers', () => {
         const FIRST_NUMBER: number = 2;
         const SECOND_NUMBER: number  = 2;
-
-        const logger = jasmine.createSpyObj('LoggerService', ['log']);
-
-        const calculatorService: CalculatorService = new CalculatorService(logger);
-
-
+        const EXPECTED_RESULT: number = FIRST_NUMBER + SECOND_NUMBER;
+        const METHOD_CALLED_TIMES: number = 1;
+        
+        
         const result = calculatorService.add(FIRST_NUMBER, SECOND_NUMBER);
-
-        expect(result).toBe(4, "Unexpected addition result");
-        expect(logger.log).toHaveBeenCalledTimes(1);
+        
+        expect(result).toBe(EXPECTED_RESULT, "Unexpected addition result");
+        expect(loggerSpy.log).toHaveBeenCalledTimes(METHOD_CALLED_TIMES);
     })
     
     it('Should substract two numbers', () => {
         const FIRST_NUMBER: number = 2;
         const SECOND_NUMBER: number  = 2;
-        const calculatorService: CalculatorService = new CalculatorService(new LoggerService());
-    
+        const EXPECTED_RESULT: number = FIRST_NUMBER - SECOND_NUMBER;
+        const METHOD_CALLED_TIMES: number = 1;
     
         const result = calculatorService.subtract(FIRST_NUMBER, SECOND_NUMBER);
     
-        expect(result).toBe(0);
+        expect(result).toBe(EXPECTED_RESULT, "Unexpected substraction result");
+        expect(loggerSpy.log).toHaveBeenCalledTimes(METHOD_CALLED_TIMES);
     })
     
 })
