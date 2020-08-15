@@ -14,7 +14,7 @@ describe('Calculator service', () => {
 
         const result = calculatorService.add(FIRST_NUMBER, SECOND_NUMBER);
 
-        expect(result).toBe(4);
+        expect(result).toBe(4, "Unexpected addition result");
         expect(logger.log).toHaveBeenCalledTimes(1);
     })
     
